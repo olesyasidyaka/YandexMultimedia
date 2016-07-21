@@ -23,7 +23,7 @@ VideoEditor.prototype.loadElements = function() {
     this.video = document.getElementById("video");
     this.video.addEventListener("play", this.timerCallback.bind(this));
     this.video.volume = 0;
-    this.video.addEventListener('canplay', this.canplay.bind(this, 'main video'));
+    //this.video.addEventListener('canplay', this.canplay.bind(this, 'main video'));
 
     var shift = Math.floor(this.shiftSize);
     this.canvasVisible = document.getElementById('canvas');
@@ -70,7 +70,7 @@ VideoEditor.prototype.loadSubs = function() {
 }
 
 VideoEditor.prototype.play = function() {
-    if (VideoEditor.prototype.canplay.counter === 3) {
+    if (VideoEditor.prototype.canplay.counter === 2) {
         this.video.play();
         this.videoScratches.play();
         this.audio.play();
@@ -78,7 +78,7 @@ VideoEditor.prototype.play = function() {
 }
 
 VideoEditor.prototype.stop = function() {
-    if (VideoEditor.prototype.canplay.counter === 3) {
+    if (VideoEditor.prototype.canplay.counter === 2) {
         this.video.pause();
         this.videoScratches.pause();
         this.audio.pause();
