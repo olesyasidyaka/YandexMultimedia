@@ -19,11 +19,10 @@ VideoEditor.prototype.timerCallback = function() {
 }
 
 VideoEditor.prototype.loadElements = function() {
-    var speed = 1;
+    console.log('load elements');
     this.video = document.getElementById("video");
     this.video.addEventListener("play", this.timerCallback.bind(this));
     this.video.volume = 0;
-    this.video.playbackRate = speed;
 
     var shift = Math.floor(this.shiftSize);
     this.canvasVisible = document.getElementById('canvas');
@@ -33,7 +32,7 @@ VideoEditor.prototype.loadElements = function() {
 
     this.videoScratches = document.createElement('video');
     this.videoScratches.src = "img/effect.mp4";
-    this.videoScratches.playbackRate = 0.6 * speed;
+    this.videoScratches.playbackRate = 0.6;
     this.videoScratches.volume = 1;
 
     this.canvasHidden = document.createElement('canvas');
@@ -49,13 +48,13 @@ VideoEditor.prototype.loadElements = function() {
     this.audio = document.createElement('audio');
     this.audio.src = 'Maple_Leaf_RagQ.ogg';
     this.audio.volume = 0.2;
-    this.audio.playbackRate = speed;
 
     this.video.addEventListener("loadedmetadata", this.loadSubs.bind(this));
     this.video.addEventListener("loadeddata", this.loadSubs.bind(this));
 }
 
 VideoEditor.prototype.loadSubs = function() {
+    console.log('load subs');
     this.subsManager = new SubsManager(this.video.textTracks[0]);
     this.subsManager.setStartTime.call(this);
 }
