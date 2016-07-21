@@ -23,7 +23,7 @@ VideoEditor.prototype.loadElements = function() {
     this.video = document.getElementById("video");
     this.video.addEventListener("play", this.timerCallback.bind(this));
     this.video.volume = 0;
-    this.video.addEventListener('canplay', this.canplay.bind(this));
+    this.video.addEventListener('canplay', this.canplay.bind(this, 'main video'));
 
     var shift = Math.floor(this.shiftSize);
     this.canvasVisible = document.getElementById('canvas');
@@ -35,7 +35,7 @@ VideoEditor.prototype.loadElements = function() {
     this.videoScratches.src = "img/effect.mp4";
     this.videoScratches.playbackRate = 0.6;
     this.videoScratches.volume = 1;
-    this.videoScratches.addEventListener('canplay', this.canplay.bind(this));
+    this.videoScratches.addEventListener('canplay', this.canplay.bind(this, 'scratches'));
 
     this.canvasHidden = document.createElement('canvas');
     this.canvasHidden.width = this.width;
@@ -50,16 +50,16 @@ VideoEditor.prototype.loadElements = function() {
     this.audio = document.createElement('audio');
     this.audio.src = 'Maple_Leaf_RagQ.ogg';
     this.audio.volume = 0.2;
-    this.audio.addEventListener('canplay', this.canplay.bind(this));
+    this.audio.addEventListener('canplay', this.canplay.bind(this, 'audio'));
 
     this.video.addEventListener("loadedmetadata", this.loadSubs.bind(this));
     this.video.addEventListener("loadeddata", this.loadSubs.bind(this));
     this.video.addEventListener("play", this.loadSubs.bind(this));
 }
 
-VideoEditor.prototype.canplay = function() {
+VideoEditor.prototype.canplay = function(type) {
     this.canplay.counter++;
-    console.log("can play " + this.canplay.counter);
+    console.log("can play " + type + " " + this.canplay.counter);
 }
 
 VideoEditor.prototype.canplay.counter = 0;
