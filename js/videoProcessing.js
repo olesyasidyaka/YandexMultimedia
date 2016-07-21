@@ -23,6 +23,7 @@ VideoEditor.prototype.loadElements = function() {
     this.video = document.getElementById("video");
     this.video.addEventListener("play", this.timerCallback.bind(this));
     this.video.volume = 0;
+    this.video.addEventListener('canplay', this.canplay.bind(this));
 
     var shift = Math.floor(this.shiftSize);
     this.canvasVisible = document.getElementById('canvas');
@@ -34,6 +35,7 @@ VideoEditor.prototype.loadElements = function() {
     this.videoScratches.src = "img/effect.mp4";
     this.videoScratches.playbackRate = 0.6;
     this.videoScratches.volume = 1;
+    this.videoScratches.addEventListener('canplay', this.canplay.bind(this));
 
     this.canvasHidden = document.createElement('canvas');
     this.canvasHidden.width = this.width;
@@ -48,11 +50,19 @@ VideoEditor.prototype.loadElements = function() {
     this.audio = document.createElement('audio');
     this.audio.src = 'Maple_Leaf_RagQ.ogg';
     this.audio.volume = 0.2;
+    this.audio.addEventListener('canplay', this.canplay.bind(this));
 
     this.video.addEventListener("loadedmetadata", this.loadSubs.bind(this));
     this.video.addEventListener("loadeddata", this.loadSubs.bind(this));
     this.video.addEventListener("play", this.loadSubs.bind(this));
 }
+
+VideoEditor.prototype.canplay = function() {
+    this.canplay.counter++;
+    console.log("can play " + this.canplay.counter);
+}
+
+VideoEditor.prototype.canplay.counter = 0;
 
 VideoEditor.prototype.loadSubs = function() {
     this.subsManager = new SubsManager(this.video.textTracks[0]);
@@ -60,15 +70,19 @@ VideoEditor.prototype.loadSubs = function() {
 }
 
 VideoEditor.prototype.play = function() {
-    this.video.play();
-    this.videoScratches.play();
-    this.audio.play();
+    if (VideoEditor.prototype.canplay.counter === 3) {
+        this.video.play();
+        this.videoScratches.play();
+        this.audio.play();
+    }
 }
 
 VideoEditor.prototype.stop = function() {
-    this.video.pause();
-    this.videoScratches.pause();
-    this.audio.pause();
+    if (VideoEditor.prototype.canplay.counter === 3) {
+        this.video.pause();
+        this.videoScratches.pause();
+        this.audio.pause();
+    }
 }
 
 VideoEditor.prototype.makeScratchesNoise = function(length, min, max) {
