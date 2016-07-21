@@ -19,11 +19,13 @@ VideoEditor.prototype.timerCallback = function() {
 }
 
 VideoEditor.prototype.loadElements = function() {
-    console.log('load elements');
     this.video = document.getElementById("video");
     this.video.addEventListener("play", this.timerCallback.bind(this));
     this.video.volume = 0;
-    //this.video.addEventListener('canplay', this.canplay.bind(this, 'main video'));
+    this.video.addEventListener('canplay', this.canplay.bind(this, 'main video'));
+    this.video.addEventListener("loadedmetadata", this.loadSubs.bind(this));
+    this.video.addEventListener("loadeddata", this.loadSubs.bind(this));
+    this.video.addEventListener("play", this.loadSubs.bind(this));
 
     var shift = Math.floor(this.shiftSize);
     this.canvasVisible = document.getElementById('canvas');
@@ -51,10 +53,6 @@ VideoEditor.prototype.loadElements = function() {
     this.audio.src = 'Maple_Leaf_RagQ.ogg';
     this.audio.volume = 0.2;
     this.audio.addEventListener('canplay', this.canplay.bind(this, 'audio'));
-
-    this.video.addEventListener("loadedmetadata", this.loadSubs.bind(this));
-    this.video.addEventListener("loadeddata", this.loadSubs.bind(this));
-    this.video.addEventListener("play", this.loadSubs.bind(this));
 }
 
 VideoEditor.prototype.canplay = function(type) {
@@ -70,19 +68,30 @@ VideoEditor.prototype.loadSubs = function() {
 }
 
 VideoEditor.prototype.play = function() {
-    if (VideoEditor.prototype.canplay.counter === 2) {
+    if (this.video.readyState == 4 && this.videoScratches.readyState == 4 && this.audio.readyState == 4) {
         this.video.play();
         this.videoScratches.play();
         this.audio.play();
     }
+    else {
+        if (this.video.readyState != 4) {
+            console.log('video not ready');
+        }
+
+        if (this.videoScratches.readyState != 4) {
+            console.log('videoScratches not ready');
+        }
+
+        if (this.audio.readyState != 4) {
+            console.log('audio not ready');
+        }
+    }
 }
 
 VideoEditor.prototype.stop = function() {
-    if (VideoEditor.prototype.canplay.counter === 2) {
-        this.video.pause();
-        this.videoScratches.pause();
-        this.audio.pause();
-    }
+    this.video.pause();
+    this.videoScratches.pause();
+    this.audio.pause();
 }
 
 VideoEditor.prototype.makeScratchesNoise = function(length, min, max) {
