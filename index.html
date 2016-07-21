@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Глушитель</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link href="https://fonts.googleapis.com/css?family=Neucha" rel="stylesheet"></head>
+<body onload="load()">
+    <canvas id="canvas">
+    </canvas>
+
+    <div>
+        <button class="play_button" onclick="play()">Play</button>
+        <button class="play_button" onclick="stop()">Stop</button>
+    </div>
+    <video id="video" src="img/kinopoisk.ru-Sherlock-284167.mp4" style="display:none">
+        <track id="track" kind="subtitles" src="subs.vtt" default/>
+    </video>
+
+    <script src="js/videoProcessing.js"></script>
+</body>
+</html>
