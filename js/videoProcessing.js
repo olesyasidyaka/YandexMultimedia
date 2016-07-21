@@ -68,10 +68,11 @@ VideoEditor.prototype.loadSubs = function() {
 }
 
 VideoEditor.prototype.play = function() {
+    this.video.play();
+    this.videoScratches.play();
+    this.audio.play();
+
     if (this.video.readyState == 4 && this.videoScratches.readyState == 4 && this.audio.readyState == 4) {
-        this.video.play();
-        this.videoScratches.play();
-        this.audio.play();
     }
     else {
         if (this.video.readyState != 4) {
