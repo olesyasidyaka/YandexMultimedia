@@ -51,10 +51,10 @@ VideoEditor.prototype.loadElements = function() {
 
     this.video.addEventListener("loadedmetadata", this.loadSubs.bind(this));
     this.video.addEventListener("loadeddata", this.loadSubs.bind(this));
+    this.video.addEventListener("play", this.loadSubs.bind(this));
 }
 
 VideoEditor.prototype.loadSubs = function() {
-    console.log('load subs');
     this.subsManager = new SubsManager(this.video.textTracks[0]);
     this.subsManager.setStartTime.call(this);
 }
